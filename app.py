@@ -4,9 +4,10 @@ from werkzeug.utils import secure_filename
 import numpy as np
 from PIL import Image
 import tensorflow as tf
+from tensorflow import keras
 
-# Updated for Vercel deployment with Python 3.12 compatibility
-UPLOAD_FOLDER = '/tmp' if os.environ.get('VERCEL') else 'uploads'
+# Updated for Railway deployment
+UPLOAD_FOLDER = '/tmp' if os.environ.get('RAILWAY') else 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 MODEL_PATH = 'model/softmax_mnist_model.tf.keras'
 
@@ -14,8 +15,21 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'supersecretkey'
 
-# Load model only once when the app starts
-model = tf.keras.models.load_model(MODEL_PATH)
+# Load model with custom_objects to handle version compatibility
+try:
+    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+    model.compile(optimizer='adam',
+                 loss='categorical_crossentropy',
+                 metrics=['accuracy'])
+except Exception as e:
+    print(f"Error loading model: {e}")
+    # Fallback to loading with custom_objects
+    model = tf.keras.models.load_model(MODEL_PATH, 
+                                     custom_objects={'Sequential': tf.keras.Sequential},
+                                     compile=False)
+    model.compile(optimizer='adam',
+                 loss='categorical_crossentropy',
+                 metrics=['accuracy'])
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -54,7 +68,7 @@ def upload_file():
 
 # Add back the local development server
 if __name__ == '__main__':
-    if not os.environ.get('VERCEL'):
+    if not os.environ.get('RAILWAY'):
         if not os.path.exists(UPLOAD_FOLDER):
             os.makedirs(UPLOAD_FOLDER)
     app.run(debug=True) 
