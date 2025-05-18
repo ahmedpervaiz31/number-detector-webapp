@@ -1,10 +1,35 @@
-# Digit Recognition Web App
+# MNIST Digit Recognition Web App
 
-A minimal web app to classify hand-written digits (0-9) using a pre-trained Keras model.
+A web application that recognizes handwritten digits using a CNN model trained on the MNIST dataset.
 
 ## Features
-- Upload a PNG or JPG image of a digit (0-9)
-- The app preprocesses the image and predicts the digit using the provided model
+- Upload handwritten digit images
+- Real-time digit recognition
+- Built with Flask and TensorFlow
+- Deployed on Vercel
+
+## Setup
+1. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+2. Train the model:
+```bash
+python train_model.py
+```
+
+3. Run the application:
+```bash
+python app.py
+```
+
+## Technologies Used
+- Python
+- Flask
+- TensorFlow
+- HTML/CSS
+- Vercel (Deployment)
 
 ## Folder Structure
 ```
@@ -20,23 +45,6 @@ A minimal web app to classify hand-written digits (0-9) using a pre-trained Kera
   README.md
   venv/
 ```
-
-## Setup (Windows, PowerShell)
-1. **Create and activate virtual environment (if not already):**
-   ```powershell
-   python -m venv venv
-   .\venv\Scripts\Activate.ps1
-   ```
-2. **Install dependencies:**
-   ```powershell
-   pip install -r requirements.txt
-   ```
-3. **Run the app:**
-   ```powershell
-   python app.py
-   ```
-4. **Open your browser and go to:**
-   [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ## Usage
 - Upload a clear image of a single digit (0-9) in PNG or JPG format.
