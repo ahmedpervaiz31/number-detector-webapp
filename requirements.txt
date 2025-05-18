@@ -1,6 +1,6 @@
 flask==2.3.3
 tensorflow==2.17.1
-numpy==1.21.6
+numpy>=1.22.0
 Pillow==10.1.0
 werkzeug==3.0.1
 pandas==2.1.3
