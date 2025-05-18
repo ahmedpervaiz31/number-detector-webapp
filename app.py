@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = '/tmp'  # Changed to /tmp for Vercel
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 MODEL_PATH = 'model/softmax_mnist_model.tf.keras'
 
@@ -13,6 +13,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'supersecretkey'
 
+# Load model only once when the app starts
 model = tf.keras.models.load_model(MODEL_PATH)
 
 def allowed_file(filename):
@@ -48,9 +49,4 @@ def upload_file():
         else:
             flash('Allowed file types are png, jpg, jpeg')
             return redirect(request.url)
-    return render_template('index.html', digit=None)
-
-if __name__ == '__main__':
-    if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)
-    app.run(debug=True) 
+    return render_template('index.html', digit=None) 
