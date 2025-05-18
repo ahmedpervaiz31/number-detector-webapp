@@ -24,8 +24,6 @@ y_train = np.nan_to_num(y_train)
 X_valid = np.nan_to_num(X_valid)
 y_valid = np.nan_to_num(y_valid)
 
-
-adam_optimizer = tf.keras.optimizers.Adam(learning_rate=0.0005)
 # ---------------------------
 # 2. Model: CNN (LeNet-5)
 # ---------------------------
