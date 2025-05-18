@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 
-# Use /tmp for Vercel, 'uploads' for local development
+# Updated for Vercel deployment with Python 3.12 compatibility
 UPLOAD_FOLDER = '/tmp' if os.environ.get('VERCEL') else 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 MODEL_PATH = 'model/softmax_mnist_model.tf.keras'
