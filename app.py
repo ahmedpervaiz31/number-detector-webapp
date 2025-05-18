@@ -5,7 +5,8 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 
-UPLOAD_FOLDER = '/tmp'  # Changed to /tmp for Vercel
+# Updated for Vercel deployment with Python 3.12 compatibility
+UPLOAD_FOLDER = '/tmp' if os.environ.get('VERCEL') else 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 MODEL_PATH = 'model/softmax_mnist_model.tf.keras'
 
@@ -49,4 +50,11 @@ def upload_file():
         else:
             flash('Allowed file types are png, jpg, jpeg')
             return redirect(request.url)
-    return render_template('index.html', digit=None) 
+    return render_template('index.html', digit=None)
+
+# Add back the local development server
+if __name__ == '__main__':
+    if not os.environ.get('VERCEL'):
+        if not os.path.exists(UPLOAD_FOLDER):
+            os.makedirs(UPLOAD_FOLDER)
+    app.run(debug=True) 
